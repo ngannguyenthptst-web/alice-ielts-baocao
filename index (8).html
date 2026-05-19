@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Báo Cáo Học Tập — Alice IELTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:#1A202C;background:#EDF2F7;min-height:100%}
+:root{
+  --teal:#1A6B6B;--teal2:#2E9E9E;--teal-l:#E1F5EE;
+  --amber:#B7770D;--amber-l:#FEF3DC;
+  --green:#1E8449;--green-l:#EBF7EE;
+  --red:#C0392B;--red-l:#FDEDEB;
+  --border:#E2E8F0;
+  --text2:#4A5568;--text3:#718096;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.05);
+  --r:12px
+}
+#ls{position:fixed;inset:0;background:var(--teal);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .4s}
+#ls h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.5px}
+#ls p{font-size:12px;color:#9FE1CB;margin-top:6px}
+.spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin-top:22px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#lg{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px}
+.lc{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:36px 28px;width:100%;max-width:380px;text-align:center}
+.llogo{width:60px;height:60px;border-radius:15px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;margin:0 auto 18px}
+.lc h1{font-size:20px;font-weight:700;margin-bottom:4px}
+.lc>p{font-size:13px;color:var(--text3);margin-bottom:26px;line-height:1.5}
+.lc input{width:100%;padding:13px 14px;font-size:15px;font-family:inherit;border:1.5px solid var(--border);border-radius:10px;outline:none;transition:border-color .2s;margin-bottom:10px;color:#1A202C}
+.lc input:focus{border-color:var(--teal)}
+.lc input::placeholder{color:#A0AEC0}
+.btn{width:100%;padding:13px;font-size:15px;font-weight:600;font-family:inherit;background:var(--teal);color:#fff;border:none;border-radius:10px;cursor:pointer;transition:background .2s,transform .1s}
+.btn:hover{background:#145959}
+.btn:active{transform:scale(.98)}
+.errmsg{color:var(--red);font-size:12px;margin-top:8px;min-height:18px}
+.hint{font-size:11px;color:var(--text3);margin-top:14px;line-height:1.6}
+#app{display:none}
+.topbar{background:var(--teal);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.tl h2{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.tl p{font-size:11px;color:#9FE1CB;margin-top:1px}
+.tr{display:flex;align-items:center;gap:8px}
+.msel{padding:5px 10px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:11px;font-family:inherit;outline:none;cursor:pointer}
+.msel option{color:#1A202C;background:#fff}
+.lout{padding:5px 10px;background:rgba(255,255,255,.15);border:none;border-radius:7px;color:#fff;font-size:11px;font-family:inherit;cursor:pointer}
+.body{padding:14px;max-width:500px;margin:0 auto}
+.hero{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+.av{width:52px;height:52px;border-radius:50%;background:var(--teal-l);color:var(--teal);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hn{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.hm{font-size:11px;color:var(--text3);margin-top:3px}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;margin-top:6px}
+.bg{background:var(--green-l);color:var(--green)}
+.ba{background:var(--amber-l);color:var(--amber)}
+.bt{background:var(--teal-l);color:var(--teal)}
+.band{background:var(--teal);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.bnum{font-size:42px;font-weight:700;color:#fff;line-height:1}
+.blbl{font-size:11px;color:#9FE1CB;margin-bottom:3px}
+.btrend{font-size:12px;color:#5DCAA5;margin-top:4px;font-weight:500}
+.br{text-align:right}
+.bgoal{font-size:11px;color:#9FE1CB;margin-bottom:8px}
+.pbar{width:120px;height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;margin-left:auto}
+.pfill{height:100%;background:#5DCAA5;border-radius:3px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.ppct{font-size:10px;color:#9FE1CB;margin-top:5px}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:15px 16px;margin-bottom:12px}
+.slbl{font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--text3);text-transform:uppercase;margin:14px 0 8px}
+.sr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F0F4F8}
+.sr:last-child{border-bottom:none}
+.sn{font-size:12px;color:var(--text2);width:72px;flex-shrink:0}
+.bw{flex:1;height:6px;background:#EDF2F7;border-radius:3px;overflow:hidden}
+.bi{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.sv{font-size:13px;font-weight:600;width:30px;text-align:right;flex-shrink:0}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sc2{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:13px 14px}
+.scl{font-size:10px;color:var(--text3);margin-bottom:5px}
+.scv{font-size:20px;font-weight:700}
+.scs{font-size:10px;margin-top:2px;font-weight:500}
+.cg{color:var(--green)}.ca{color:var(--amber)}.cr{color:var(--red)}.ct{color:var(--teal)}
+.nx{background:#FFFBF0;border:1px solid #F6D860;border-radius:var(--r);padding:14px 16px;margin-bottom:12px}
+.nxh{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.nxt{font-size:12px;font-weight:700;color:var(--amber)}
+.nxp{font-size:13px;color:#5A4000;line-height:1.7}
+.hr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F0F4F8;font-size:13px}
+.hr:last-child{border-bottom:none;padding-top:11px}
+.hl{color:var(--text2)}.hv{font-weight:500}
+.htotal .hl{font-weight:700;font-size:14px}
+.htotal .hv{font-weight:700;color:var(--teal);font-size:15px}
+.hred{color:var(--red)}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F0F4F8;font-size:13px}
+.rr:last-child{border-bottom:none}
+.rl{color:var(--text2)}.rv{font-weight:600;color:var(--teal)}
+.foot{text-align:center;padding:18px 0 28px;font-size:11px;color:var(--text3);line-height:2}
+.foot a{color:var(--teal);text-decoration:none;font-weight:500}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fu .35s ease both}
+.d1{animation-delay:.04s}.d2{animation-delay:.08s}.d3{animation-delay:.12s}
+.d4{animation-delay:.16s}.d5{animation-delay:.20s}.d6{animation-delay:.24s}
+</style>
+</head>
+<body>
+
+<div id="ls">
+  <h1>Alice IELTS</h1>
+  <p>Đang tải dữ liệu...</p>
+  <div class="spin"></div>
+</div>
+
+<div id="lg">
+  <div class="lc">
+    <div class="llogo">AI</div>
+    <h1>Alice IELTS Center</h1>
+    <p>Nhập số điện thoại đã đăng ký để xem báo cáo học tập của con</p>
+    <input type="tel" id="sdt" placeholder="Số điện thoại phụ huynh" maxlength="11" oninput="this.value=this.value.replace(/\D/g,'')">
+    <button class="btn" onclick="doLogin()">Xem báo cáo →</button>
+    <div class="errmsg" id="err"></div>
+    <p class="hint">Dùng SĐT đã đăng ký khi nhập học<br>Cần hỗ trợ? Zalo cô Alice: <strong>0989 825 994</strong></p>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="tl">
+      <h2>Alice IELTS Center</h2>
+      <p id="topname">Báo cáo học tập</p>
+    </div>
+    <div class="tr">
+      <select class="msel" id="msel">
+        <option value="4">Tháng 4/2026</option>
+        <option value="3">Tháng 3/2026</option>
+      </select>
+      <button class="lout" onclick="doLogout()">Thoát</button>
+    </div>
+  </div>
+  <div class="body" id="bc"></div>
+</div>
+
+<script>
+// ── CẤU HÌNH ────────────────────────────────────────────────────
+const SHEET_ID = '1uaI6pXp32Y6SzJcpclrW1XK-Uy646Yqlrvmv2C32x4w';
+const TAB_NAME = 'Tổng Kết TH4';
+
+// Cột trong tab Tổng Kết (0-indexed)
+// A=STT, B=LỚP, C=TÊN, D=ChuyênCần, E=LuyệnNói, F=BTVN
+// G=Listening, H=Reading, I=Writing, J=Speaking, K=Overall
+// L=HọcPhí, M=NợCũ, N=TổngĐóng, O=NhậnXétAI, P=SĐT_PH  ← THÊM CỘT P
+const C = {stt:0,lop:1,ten:2,cc:3,ln:4,btvn:5,lis:6,read:7,wri:8,spk:9,overall:10,hp:11,no_cu:12,tong:13,nx:14,sdt:15,ngay:16};
+
+// ── DEMO DATA (dùng khi sheet chưa có SĐT thật) ─────────────────
+const DEMO = [
+  {lop:'BE14',ten:'Tuấn Anh',cc:'Đi học đầy đủ',ln:'8',btvn:'Làm đầy đủ',lis:6.5,read:7.0,wri:5.0,spk:5.0,overall:5.9,hp:3600000,no_cu:0,nx:'Tuấn Anh đang có thế mạnh rõ ràng ở Reading (7.0) và Listening (6.5) — rất tốt! Writing và Speaking còn 5.0 cần tập trung cải thiện. Hãy luyện 1 bài Task 2 mỗi ngày và 20 phút Speaking/ngày trên luyennoi.com. Cô tin em sẽ đạt 6.5 trong 2 tháng tới!',sdt:'0901234001'},
+  {lop:'BE14',ten:'Hải Đăng',cc:'Đi học đầy đủ',ln:'7',btvn:'Thiếu 1 bài',lis:6.0,read:6.0,wri:5.5,spk:6.0,overall:5.9,hp:3600000,no_cu:0,nx:'Hải Đăng tiến bộ đều đặn, band 5.9 là tích cực. Writing là kỹ năng cần chú trọng nhất. Tiếp tục duy trì chuyên cần tốt và nộp bài đầy đủ nhé!',sdt:'0901234002'},
+  {lop:'BE18',ten:'Trà My',cc:'Đi học đầy đủ',ln:'9',btvn:'Làm đầy đủ',lis:5.0,read:4.8,wri:4.5,spk:4.9,overall:4.8,hp:3600000,no_cu:500000,nx:'Trà My rất chăm chỉ và đi học đầy đủ! Writing 4.5 là điểm cần cải thiện nhiều nhất. Hãy luyện 2 bài Task 2/tuần. Cô tin em sẽ sớm đạt 6.0!',sdt:'0901234003'},
+  {lop:'BE15',ten:'Bảo Trâm',cc:'Đi học đầy đủ',ln:'8',btvn:'Làm đầy đủ',lis:5.5,read:5.5,wri:5.2,spk:5.8,overall:5.5,hp:3600000,no_cu:0,nx:'Bảo Trâm tiến bộ ổn định, Speaking 5.8 là điểm sáng! Tiếp tục duy trì và cải thiện Writing để đạt band tổng 6.0 nhé!',sdt:'0901234004'},
+];
+
+let allStudents = [];
+let currentStudent = null;
+
+// ── LOAD DATA ───────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(TAB_NAME)}`;
+    const res  = await fetch(url);
+    const csv  = await res.text();
+    const rows = parseCSV(csv);
+    const students = [];
+    for (const r of rows) {
+      // Tìm cột tên: cột C (index 2) có tên HS thật
+      const ten = clean(r[2]);
+      if (!ten || ten.length < 2) continue;
+      // Bỏ qua header và separator rows
+      if (ten.includes('HỌ TÊN') || ten.includes('học sinh') || !isNaN(parseInt(r[0])) === false) {
+        if (!r[1] || !clean(r[1]).startsWith('BE')) continue;
+      }
+      const lop = clean(r[1]);
+      if (!lop || !lop.startsWith('BE')) continue;
+
+      // Tìm SĐT: quét tất cả cột từ index 10 trở đi tìm số 9-11 chữ số
+      let sdt = '';
+      for (let i = 10; i < r.length; i++) {
+        const v = clean(r[i]).replace(/\s/g,'');
+        if (/^0?\d{9,10}$/.test(v) && !v.startsWith('3') && !v.startsWith('36')) {
+          sdt = v; break;
+        }
+      }
+
+      // Học phí: tìm số lớn (> 100000) trong cột 11-14
+      let hp = 0;
+      for (let i = 11; i <= 14; i++) {
+        const v = num(r[i]);
+        if (v > 100000) { hp = v; break; }
+      }
+
+      students.push({
+        lop, ten,
+        cc:      clean(r[3])  || 'Đi học đầy đủ',
+        ln:      clean(r[4])  || '0',
+        btvn:    clean(r[5])  || 'Làm đầy đủ',
+        lis:     num(r[6]),   read: num(r[7]),
+        wri:     num(r[8]),   spk:  num(r[9]),
+        overall: num(r[10]),
+        hp:      hp || 3600000,
+        no_cu:   num(r[12]) || 0,
+        nx:      clean(r[14]) || '',
+        sdt:     sdt || clean(r[15]) || '',
+        ngay_hoc: clean(r[16]) || '',
+      });
+    }
+    return students.length > 0 ? students : DEMO;
+  } catch(e) {
+    console.error('Load error:', e);
+    return DEMO;
+  }
+}
+
+function parseCSV(csv) {
+  return csv.split('\n').map(line => {
+    const cols = []; let cur = ''; let inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur);
+    return cols;
+  });
+}
+
+function clean(v) { return v ? v.replace(/^"|"$/g,'').trim() : ''; }
+function num(v) {
+  if (!v) return 0;
+  let s = String(v).replace(/"/g,'').replace(/\s/g,'').replace(/[đ₫]/g,'').trim();
+  if (!s) return 0;
+  const commas = (s.match(/,/g)||[]).length;
+  const dots   = (s.match(/\./g)||[]).length;
+  if (commas === 0 && dots === 0) return parseFloat(s) || 0;
+  // Nhiều dấu phẩy → phẩy là ngàn: 3,680,000
+  if (commas > 1) return parseFloat(s.replace(/,/g,'')) || 0;
+  // Nhiều dấu chấm → chấm là ngàn: 3.680.000
+  if (dots > 1) return parseFloat(s.replace(/\./g,'').replace(',','.')) || 0;
+  // 1 dấu phẩy + 0 chấm → xét phần sau phẩy
+  if (commas === 1 && dots === 0) {
+    const afterComma = s.split(',')[1];
+    // Nếu sau phẩy chỉ có 1-2 chữ số → thập phân: 5,5 → 5.5
+    if (afterComma && afterComma.length <= 2) return parseFloat(s.replace(',','.')) || 0;
+    // Sau phẩy có 3 chữ số → ngàn: 3,680 → 3680
+    return parseFloat(s.replace(',','')) || 0;
+  }
+  // 1 dấu chấm + 0 phẩy → thập phân bình thường: 5.5
+  if (dots === 1 && commas === 0) return parseFloat(s) || 0;
+  // 1 phẩy + 1 chấm → châu Âu: 3.680,50 → 3680.50
+  return parseFloat(s.replace('.','').replace(',','.')) || 0;
+}
+
+// ── LOGIN ───────────────────────────────────────────────────────
+function doLogin() {
+  const sdt = document.getElementById('sdt').value.trim();
+  document.getElementById('err').textContent = '';
+  if (!sdt || sdt.length < 9) {
+    document.getElementById('err').textContent = 'Vui lòng nhập số điện thoại hợp lệ.';
+    return;
+  }
+  let found = allStudents.find(s => s.sdt === sdt || s.sdt === '0'+sdt || '0'+s.sdt === sdt);
+  if (!found) {
+    document.getElementById('err').textContent = 'Không tìm thấy tài khoản. Vui lòng liên hệ cô Alice.';
+    return;
+  }
+  currentStudent = found;
+  showApp();
+}
+
+function doLogout() {
+  currentStudent = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('lg').style.display = 'flex';
+  document.getElementById('sdt').value = '';
+  document.getElementById('err').textContent = '';
+}
+
+// ── RENDER ──────────────────────────────────────────────────────
+function showApp() {
+  document.getElementById('lg').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('topname').textContent = currentStudent.ten;
+  render(currentStudent);
+}
+
+function render(s) {
+  const av = s.ten.split(' ').slice(-2).map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
+  const ov = s.overall || +((s.lis+s.read+s.wri+s.spk)/4).toFixed(1);
+  const goal = 7.0;
+  const pct  = Math.min(100, Math.round(ov/goal*100));
+
+  const isNewClass = s.lop.includes('18')||s.lop.includes('19');
+  const badgeCls   = isNewClass?'bt':ov>=6?'bg':'ba';
+  const badgeTxt   = isNewClass?'Nền tảng':ov>=6.5?'Luyện đề':'Đang ôn thi';
+
+  const skills = [{n:'Listening',v:s.lis},{n:'Reading',v:s.read},{n:'Writing',v:s.wri},{n:'Speaking',v:s.spk}];
+  const worst  = [...skills].sort((a,b)=>a.v-b.v)[0].n;
+
+  const hp   = s.hp   || 3600000;
+  const examDate = {'BE14':'Tháng 8/2026','BE15':'Tháng 8/2026','BE16':'Tháng 12/2026','BE17':'Tháng 12/2026','BE18':'Tháng 2/2027','BE19':'Tháng 2/2027'}[s.lop.replace(' ','')] || 'Tháng 8/2026';
+  const noCu = s.no_cu|| 0;
+  const tong = hp + noCu;
+
+  const nx = s.nx && s.nx.length > 20 ? s.nx : (() => {
+    const ten_goi = s.ten.split(' ').pop();
+    const skills = [{n:'Listening',v:s.lis},{n:'Reading',v:s.read},{n:'Writing',v:s.wri},{n:'Speaking',v:s.spk}];
+    const sorted = [...skills].filter(x=>x.v>0).sort((a,b)=>a.v-b.v);
+    const manh = sorted[sorted.length-1]; const yeu = sorted[0];
+    const goiy = {'Writing':'luyện viết ít nhất 1 bài Task 2 mỗi ngày, chú trọng cấu trúc và từ vựng học thuật',
+                  'Speaking':'luyện nói 20 phút/ngày trên luyennoi.com, tập trả lời Part 1-2-3 IELTS',
+                  'Listening':'nghe BBC/CNN 15-20 phút/ngày và làm Cambridge Listening tests',
+                  'Reading':'đọc 1 bài IELTS Reading/ngày, luyện skim và scan để tăng tốc độ'};
+    let nx = `${ten_goi} đã nỗ lực trong tháng 4`;
+    if (manh && manh.v > 0) nx += `, thế mạnh nổi bật ở ${manh.n} (${manh.v})`;
+    nx += '. ';
+    if (yeu && yeu.v > 0) nx += `Kỹ năng cần tập trung cải thiện nhất là ${yeu.n} (${yeu.v}) — cô gợi ý ${goiy[yeu.n] || 'luyện tập đều đặn mỗi ngày'}. `;
+    nx += `Tiếp tục duy trì chuyên cần và luyện tập đều đặn, cô tin ${ten_goi} sẽ đạt band 7.0 đúng mục tiêu!`;
+    return nx;
+  })();
+  const lnNum = s.ln.match(/\d+/)?s.ln.match(/\d+/)[0]:s.ln;
+  const ccOk  = s.cc.includes('đầy đủ')||s.cc.includes('100');
+  const nbOk  = s.btvn.includes('đầy đủ')||s.btvn.includes('100');
+
+  document.getElementById('bc').innerHTML = `
+<div class="hero fu">
+  <div class="av">${av}</div>
+  <div>
+    <div class="hn">${s.ten}</div>
+    <div class="hm">Lớp ${s.lop} · Tháng 4/2026</div>
+    <span class="badge ${badgeCls}">${badgeTxt}</span>
+  </div>
+</div>
+
+<div class="band fu d1">
+  <div>
+    <div class="blbl">Band score tổng</div>
+    <div class="bnum">${ov.toFixed(1)}</div>
+    <div class="btrend">${ov>=6?'↑ Tiến bộ tốt':'→ Đang ổn định'}</div>
+  </div>
+  <div class="br">
+    <div class="bgoal">Mục tiêu: ${goal.toFixed(1)}</div>
+    <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+    <div class="ppct">${pct}% mục tiêu</div>
+  </div>
+</div>
+
+<p class="slbl">Điểm 4 kỹ năng</p>
+<div class="card fu d2">${skills.map(sk=>{
+  const p=Math.round(sk.v/9*100);
+  const c=sk.v>=6.5?'#1D9E75':sk.v>=5.5?'#2E9E9E':sk.v>=5?'#EF9F27':'#E24B4A';
+  const tc=sk.v>=6?'cg':sk.v>=5?'ct':'ca';
+  return `<div class="sr"><span class="sn">${sk.n}</span><div class="bw"><div class="bi" style="width:${p}%;background:${c}"></div></div><span class="sv ${tc}">${sk.v.toFixed(1)}</span></div>`;
+}).join('')}</div>
+
+<div class="sg fu d3">
+  <div class="sc2"><div class="scl">Chuyên cần</div><div class="scv ${ccOk?'cg':'ca'}">${ccOk?'✓ Tốt':'Cần cải thiện'}</div><div class="scs ${ccOk?'cg':'ca'}">${s.cc}</div></div>
+  <div class="sc2"><div class="scl">Nộp bài tập</div><div class="scv ${nbOk?'cg':'ca'}">${nbOk?'✓ Tốt':'Cần cải thiện'}</div><div class="scs ${nbOk?'cg':'ca'}">${s.btvn}</div></div>
+  <div class="sc2"><div class="scl">Luyện nói</div><div class="scv ct">${lnNum}/10</div><div class="scs ct">luyennoi.com</div></div>
+  <div class="sc2"><div class="scl">Mục tiêu thi</div><div class="scv ct" style="font-size:15px">${examDate}</div><div class="scs ct">Band ${goal.toFixed(1)}</div></div>
+</div>
+
+<p class="slbl">Nhận xét của giáo viên</p>
+<div class="nx fu d4">
+  <div class="nxh"><div style="width:28px;height:28px;border-radius:50%;background:var(--amber-l);display:flex;align-items:center;justify-content:center;font-size:14px">✏️</div><span class="nxt">Cô Alice nhận xét</span></div>
+  <p class="nxp">${nx}</p>
+</div>
+
+<p class="slbl">Học phí tháng 4</p>
+<div class="card fu d5">
+  ${s.ngay_hoc?`<div class="hr" style="flex-direction:column;align-items:flex-start;gap:4px"><span class="hl" style="font-size:11px">Ngày đi học tháng 4</span><span style="font-size:12px;color:var(--teal2);line-height:1.6">${s.ngay_hoc}</span></div>`:''}
+  <div class="hr"><span class="hl">Học phí (${buoi} buổi × 300.000đ)</span><span class="hv">${hp.toLocaleString('vi-VN')}đ</span></div>
+  <div class="hr"><span class="hl">Web luyện nói</span><span class="hv">80.000đ</span></div>
+  ${noCu>0?`<div class="hr"><span class="hl hred">Nợ tháng trước</span><span class="hv hred">${noCu.toLocaleString('vi-VN')}đ</span></div>`:''}
+  <div class="hr htotal"><span class="hl">Tổng phải đóng</span><span class="hv">${tong.toLocaleString('vi-VN')}đ</span></div>
+  <div style="margin-top:12px;padding:12px;background:#FFF8F0;border-radius:10px;border:1px solid #F6D860">
+    <div style="font-size:11px;font-weight:500;color:#633806;margin-bottom:8px">Thông tin chuyển khoản</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="https://img.vietqr.io/image/VIB-989825994-compact2.jpg?amount=${tong}&addInfo=${encodeURIComponent(s.ten + ' T4')}&accountName=NGUYEN%20DINH%20HAI%20NGAN" style="width:90px;height:90px;border-radius:8px;flex-shrink:0" alt="QR chuyển khoản">
+      <div style="font-size:12px;color:#5A4000;line-height:1.8">
+        <div><b>Ngân hàng:</b> VIB</div>
+        <div><b>STK:</b> 989825994</div>
+        <div><b>Chủ TK:</b> NGUYỄN ĐÌNH HẢI NGÂN</div>
+        <div><b>Nội dung:</b> ${s.ten} T4</div>
+        <div style="margin-top:4px;font-size:11px;color:#854F0B">Quét QR để chuyển khoản nhanh →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="slbl">Lộ trình</p>
+<div class="card fu d6">
+  <div class="rr"><span class="rl">Giai đoạn</span><span class="rv">${badgeTxt}</span></div>
+  <div class="rr"><span class="rl">Dự kiến thi</span><span class="rv">${examDate}</span></div>
+  <div class="rr"><span class="rl">Kỹ năng ưu tiên</span><span class="rv" style="color:#B7770D">${worst}</span></div>
+  <div class="rr"><span class="rl">Luyện thi online</span><a href="https://luyennoi.com" target="_blank" style="font-size:13px;font-weight:600;color:var(--teal);text-decoration:none">luyennoi.com →</a></div>
+</div>
+
+<div class="foot">
+  <div>Alice IELTS Center</div>
+  <div><a href="https://ieltsalice.edu.vn">ieltsalice.edu.vn</a> · Zalo: <a href="tel:0989825994">0989 825 994</a></div>
+</div>`;
+}
+
+// ── KHỞI ĐỘNG ───────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  allStudents = await loadData();
+  document.getElementById('ls').style.opacity = '0';
+  setTimeout(()=>{
+    document.getElementById('ls').style.display = 'none';
+    document.getElementById('lg').style.display = 'flex';
+  }, 400);
+  document.getElementById('sdt').addEventListener('keydown', e => {
+    if (e.key==='Enter') doLogin();
+  });
+});
+</script>
+</body>
+</html>
